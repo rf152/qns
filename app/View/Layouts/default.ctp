@@ -20,7 +20,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $this->fetch('title'); ?>
+		QNS: <?php echo $this->fetch('title'); ?>
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
@@ -41,7 +41,12 @@
 <body>
 	<div id="container">
 		<div id="header">
-			<?php if (!$this->Session->read('qns.display')): ?>
+			<?php
+			if (
+				!$this->Session->read('qns.display') &&
+				isset($authuser['id'])
+			):
+			?>
 			<ul id="topmenu">
 				<li>
 					<?php
@@ -71,6 +76,39 @@
 						'Scores',
 						array(
 							'controller' => 'scores',
+							'action' => 'edit',
+						)
+					);
+					?>
+				</li>
+				<li>
+					<?php
+					echo $this->Html->link(
+						'Load Game',
+						array(
+							'controller' => 'games',
+							'action' => 'load',
+						)
+					);
+					?>
+				</li>
+				<li class="right">
+					<?php
+					echo $this->Html->link(
+						'Logout',
+						array(
+							'controller' => 'users',
+							'action' => 'logout',
+						)
+					);
+					?>
+				</li>
+				<li class="right">
+					<?php
+					echo $this->Html->link(
+						'Profile',
+						array(
+							'controller' => 'users',
 							'action' => 'edit',
 						)
 					);

@@ -32,13 +32,12 @@ class TeamsController extends AppController {
 				$this->Team->set('name', $team['name']);
 				$this->Team->save();
 			}
-			$this->redirect(
+			return $this->redirect(
 				array(
 					'controller' => 'scoresheet',
 					'action' => 'index',
 				)
 			);
-			die();
 		} else {
 			$this->Team->recursive = -1;
 			if ($id === false) {
@@ -56,6 +55,7 @@ class TeamsController extends AppController {
 			}
 			$this->set('teams', $teams);
 		}
+		$this->set('title_for_layout', 'Edit Team Names');
 	}
 }
 

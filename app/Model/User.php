@@ -1,8 +1,8 @@
 <?php
 /**
- * Game model for QNS
+ * User model for QNS
  * 
- * This file is a model representing a Quiznight Game.
+ * This file is a model representing a QNS User.
  * 
  * QNS: Quiznight Scoring System
  * Copyright (c) Richard Franks (https://github.com/rf152/qns)
@@ -19,34 +19,30 @@
  */
 
 App::uses('AppModel', 'Model');
+App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 
 /**
- * Game Model
+ * User Model
  *
  * @package       qns.Model
  */
-class Game extends AppModel {
+class User extends AppModel {
 	/// Relationships
-	public $belongsTo = array(
-		'Game_User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
+	public $hasMany = array(
+		'User_Game' => array(
+			'className' => 'Game',
+			'foreign_key' => 'user_id',
 		),
 	);
 	
-	public $hasMany = array(
-		'Game_Team' => array(
-			'className' => 'Team',
-			'foreign_key' => 'game_id',
-			'order' => array(
-				'total DESC',
-				'id',
-			),
-		),
-		'Game_Round' => array(
-			'className' => 'Round',
-			'foreign_key' => 'game_id',
-		),
-	);
+	public function beforeSave($options = array()) {
+		if (isset($this->data[$this->alias]['password'])) {
+			$passwordHasher = new BlowfishPasswordHasher();
+			$this->data[$this->alias]['password'] = $passwordHasher->hash(
+				$this->data[$this->alias]['password']
+			);
+		}
+		return true;
+	}
 }
 ?>

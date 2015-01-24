@@ -27,28 +27,74 @@ class GamesController extends AppController {
 		$this->set('games', $games);
 	}
 	
-	public function badger() {
-		$this->Game->create();
-		$data = array(
-			'Game' => array(
-				'name' => 'Test Game',
-				'user_id' => 1,
-			),
-		);
-		$this->Game->save($data);
-		
-		$this->redirect(array('action' => 'index'));
+	public function load() {
+		if ($this->request->is(array('post', 'put'))) {
+			$game = $this->Game->findById($this->request->data['Game']['id']);
+			if (isset($game['Game'])) {
+				$this->Session->write('qns.game_id', $game['Game']['id']);
+				return $this->redirect(
+					array(
+						'controller' => 'scoresheet',
+						'action' => 'index',
+					)
+				);
+			}
+		}
+		$this->Game->recursive = -1;
+		if ($this->Auth->user('superadmin')) {
+			$games = $this->Game->find('all');
+		} else {
+			$games = $this->Game->findAllByUserId($this->Auth->user('id'));
+		}
+		$this->set('games', $games);
+		$this->set('title_for_layout', 'Load Game');
 	}
 	
-	public function load() {
-		$game = $this->Game->find('first');
-		$this->Session->write('qns.game_id', $game['Game']['id']);
-		$this->redirect(
-			array(
-				'controller' => 'scoresheet',
-				'action' => 'index',
-			)
-		);
+	public function create() {
+		if ($this->request->is(array('post', 'put'))) {
+			$this->loadModel('Team');
+			$this->loadModel('Round');
+			$this->Game->create();
+			$this->request->data['Game']['user_id'] = $this->Auth->user('id');
+			$this->Game->save($this->request->data);
+			if (!$this->request->data['Game']['interval_round']) {
+				$this->request->data['Game']['interval_round'] = -1;
+			}
+			$j = 1;
+			for ($i = 0; $i < $this->request->data['Game']['num_rounds']; $i++) {
+				echo ".";
+				$this->Round->create();
+				$round = array();
+				if ($this->request->data['Game']['interval_round'] == $i+1) {
+					// This is the interval round
+					$round['Round']['round_name'] = 'I';
+				} else {
+					$round['Round']['round_name'] = $j;
+					$j++;
+				}
+				$round['Round']['game_id'] = $this->Game->id;
+				$round['Round']['round_number'] = $i;
+				$this->Round->save($round);
+			}
+			for ($i = 0; $i < $this->request->data['Game']['num_teams']; $i++) {
+				echo "#";
+				$team = array();
+				$this->Team->create();
+				$team['Team']['name'] = 'Team ' . ($i + 1);
+				$team['Team']['game_id'] = $this->Game->id;
+				$team['Team']['total'] = 0;
+				$this->Team->save($team);
+			}
+			$this->Session->write('qns.game_id', $this->Game->id);
+			return $this->redirect(
+				array(
+					'controller' => 'scoresheet',
+					'action' => 'index',
+				)
+			);/**/
+			die("POST");
+		}
+		$this->set('title_for_layout', 'Create Game');
 	}
 }
 

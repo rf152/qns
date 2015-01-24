@@ -31,6 +31,14 @@
 			'action' => 'index',
 		)
 	);
+	
+	Router::connect(
+		'/profile',
+		array(
+			'controller' => 'users',
+			'action' => 'edit',
+		)
+	);
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

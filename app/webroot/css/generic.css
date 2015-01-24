@@ -137,6 +137,16 @@ p {
 	text-decoration: underline;
 }
 
+#topmenu li.right {
+	float:right;
+	border-right: none;
+	padding-left: 10px;
+	margin-left: 10px;
+	margin-right: 0px;
+	padding-right: 0px;
+	border-left: 1px solid #FFFFFF;
+}
+
 /** containers **/
 div.form,
 div.index,
@@ -154,6 +164,11 @@ div.actions {
 div.actions h3 {
 	padding-top:0;
 	color:#777;
+}
+
+div.narrow {
+	width: 500px;
+	margin: auto;
 }
 
 
@@ -207,7 +222,7 @@ table.narrowtable {
 /* SQL log */
 .cake-sql-log {
 	background: #fff;
-	visibility: hidden;
+	display: none;
 }
 .cake-sql-log td {
 	padding: 4px 8px;
@@ -385,7 +400,7 @@ input[type=submit] {
 	font-size: 110%;
 	width: auto;
 }
-form .submit input[type=submit] {
+form input[type=submit] {
 	background:#62af56;
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#76BF6B), to(#3B8230));
 	background-image: -webkit-linear-gradient(top, #76BF6B, #3B8230);
@@ -395,7 +410,7 @@ form .submit input[type=submit] {
 	text-shadow: rgba(0, 0, 0, 0.5) 0px -1px 0px;
 	padding: 8px 10px;
 }
-form .submit input[type=submit]:hover {
+form input[type=submit]:hover {
 	background: #5BA150;
 }
 /* Form errors */

@@ -115,6 +115,3 @@ echo $this->Form->submit('Save');
 		$( "#tabs" ).tabs({active:<?php echo $roundid; ?>});
 	});
 </script>
-<pre>
-<?php print_r($rounds); ?>
-</pre>

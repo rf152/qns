@@ -73,6 +73,7 @@ class ScoresController extends AppController {
 			$this->set('roundid', $roundid);
 			$this->set('rounds', $rounds);
 		}
+		$this->set('title_for_layout', 'Insert Scores');
 	}
 }
 

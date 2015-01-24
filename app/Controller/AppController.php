@@ -31,13 +31,68 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	public $components = array(
+		'Session' => array(
+			'timeout' => 120,
+			'cookieTimeout' => 1440,
+		),
+		'Auth' => array(
+			'loginRedirect' => array(
+				'controller' => 'scoresheet',
+				'action' => 'index',
+			),
+			'logoutRedirect' => array(
+				'controller' => 'users',
+				'action' => 'login',
+			),
+			'loginAction' => array(
+				'controller' => 'users',
+				'action' => 'login',
+			),
+			'authenticate' => array(
+				'Form' => array(
+					'passwordHasher' => 'Blowfish',
+					'fields' => array(
+						'username' => 'email',
+					),
+					'userFields' => array(
+						'id',
+						'email',
+						'name',
+						'superadmin',
+					),
+				),
+			),
+		),
+	);
+	
 	public function beforeFilter() {
 		
 		if (!$this->Session->read('qns.game_id')) {
-			$this->gid = false;
+			if (
+				!(
+					$this->request->controller == 'games' &&
+					$this->request->action == 'load'
+				) &&
+				!(
+					$this->request->controller == 'users' &&
+					(
+						$this->request->action == 'login' ||
+						$this->request->action == 'logout'
+					)
+				)
+			) {
+				$this->redirect(
+					array(
+						'controller' => 'games',
+						'action' => 'load',
+					)
+				);
+			}
 		} else {
 			$this->gid = $this->Session->read('qns.game_id');
 		}
+		$this->set('authuser', $this->Auth->user());
 		parent::beforeFilter();
 	}
 }
