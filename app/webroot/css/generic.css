@@ -1,18 +1,18 @@
-@charset "utf-8";
 /**
  *
- * Generic CSS for CakePHP
+ * Generic CSS for QNS
  *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * QNS: Quiznight Scoring System
+ * Copyright (c) Richard Franks (https://github.com/rf152/qns)
  *
  * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
+ * For full copyright and license information, please see the LICENSE
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.webroot.css
+ * @copyright     Copyright (c) Richard Franks
+ * @link          https://github.com/rf152/qns
+ * @package       qns.View.Layouts
+ * @since         QNS 0.1
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
@@ -23,19 +23,18 @@
 
 /** General Style Info **/
 body {
-	background: #003d4c;
-	color: #fff;
+	background: #FFFFFF;
+	color: #000000;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
-	font-size:90%;
 	margin: 0;
 }
 a {
-	color: #003d4c;
+	color: #000099;
 	text-decoration: underline;
 	font-weight: bold;
 }
 a:hover {
-	color: #367889;
+	color: #990000;
 	text-decoration:none;
 }
 a img {
@@ -46,12 +45,10 @@ h1, h2, h3, h4 {
 	margin-bottom:0.5em;
 }
 h1 {
-	background:#fff;
 	color: #003d4c;
 	font-size: 100%;
 }
 h2 {
-	background:#fff;
 	color: #e32;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 190%;
@@ -78,24 +75,17 @@ p {
 }
 
 #header{
-	padding: 10px 20px;
-}
-#header h1 {
-	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
-	color: #fff;
-	padding: 0px 30px;
-}
-#header h1 a {
-	color: #fff;
-	background: #003d4c;
-	font-weight: normal;
-	text-decoration: none;
-}
-#header h1 a:hover {
-	color: #fff;
-	background: #003d4c;
-	text-decoration: underline;
+	font-size: 0.9em;
+	background: #444444;
+	color: #FFFFFF;
+	padding: 0px 20px;
+	background-repeat: repeat-x;
+	background-image: -moz-linear-gradient(top, #666666, #333333);
+	background-image: -ms-linear-gradient(top, #666666, #333333);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#666666), to(#333333));
+	background-image: -webkit-linear-gradient(top, #666666, #333333);
+	background-image: -o-linear-gradient(top, #666666, #333333);
+	background-image: linear-gradient(top, #666666, #333333);
 }
 #content{
 	background: #fff;
@@ -113,6 +103,38 @@ p {
 }
 #cake-powered {
 	float: right;
+}
+
+/** Menu **/
+#topmenu {
+	padding: 0;
+	margin: 0;
+	height: 2em;
+}
+
+#topmenu li {
+	margin: 0;
+	height: 100%;
+	display: block;
+	float: left;
+	margin-right: 10px;
+	border-right: 1px solid #FFFFFF;
+	padding-right: 10px;
+}
+
+#topmenu li:first-child {
+	padding-left: 10px;
+	border-left: 1px solid #FFFFFF;
+}
+
+#topmenu li a {
+	text-decoration: none;
+	line-height: 2em;
+	display: block;
+}
+
+#topmenu li a:hover {
+	text-decoration: underline;
 }
 
 /** containers **/
@@ -178,9 +200,14 @@ table td.actions a {
 	padding:2px 5px;
 }
 
+table.narrowtable {
+	width: 500px;
+}
+
 /* SQL log */
 .cake-sql-log {
 	background: #fff;
+	visibility: hidden;
 }
 .cake-sql-log td {
 	padding: 4px 8px;
@@ -311,12 +338,12 @@ form div.submit {
 }
 label {
 	display: block;
-	font-size: 110%;
+	font-size: 1.2em;
 	margin-bottom:3px;
 }
 input, textarea {
 	clear: both;
-	font-size: 140%;
+	font-size: 1.1em;
 	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
 	padding: 1%;
 	width:98%;
@@ -741,4 +768,15 @@ pre {
 /** Elements **/
 #url-rewriting-warning {
 	display:none;
+}
+
+/** Special Scores **/
+.score-joker {
+	font-weight: bold;
+	color: #009900;
+}
+
+.score-chicken {
+	font-weight: bold;
+	color: #0000FF;
 }

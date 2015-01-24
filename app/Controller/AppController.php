@@ -31,4 +31,13 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+	public function beforeFilter() {
+		
+		if (!$this->Session->read('qns.game_id')) {
+			$this->gid = false;
+		} else {
+			$this->gid = $this->Session->read('qns.game_id');
+		}
+		parent::beforeFilter();
+	}
 }
