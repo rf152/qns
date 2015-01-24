@@ -1,0 +1,3 @@
+# QNS
+
+Quiznight Scoring System
