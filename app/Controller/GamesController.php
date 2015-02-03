@@ -96,6 +96,39 @@ class GamesController extends AppController {
 		}
 		$this->set('title_for_layout', 'Create Game');
 	}
+	
+	public function getTick() {
+		if ($this->gid === false) {
+			throw new NotFoundException();
+		}
+		$this->Game->recursive = -1;
+		$game = $this->Game->findById($this->gid);
+		if (!isset($game['Game'])) {
+			throw new NotFoundException();
+		}
+		$this->layout = 'ajax';
+		$this->set('tick', $game['Game']['tick']);
+	}
+	
+	public function increaseTick() {
+		if ($this->gid === false) {
+			throw new NotFoundException();
+		}
+		$this->Game->recursive = -1;
+		$game = $this->Game->findById($this->gid);
+		if (!isset($game['Game'])) {
+			throw new NotFoundException();
+		}
+		$game['Game']['tick']++;
+		$this->Game->create();
+		$this->Game->save($game);
+		$this->redirect(
+			array(
+				'controller' => 'scoresheet',
+				'action' => 'index',
+			)
+		);
+	}
 }
 
 ?>

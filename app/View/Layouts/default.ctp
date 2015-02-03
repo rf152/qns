@@ -36,6 +36,31 @@
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+		
+		if (
+			$this->Session->read('qns.display') &&
+			isset($authuser['id'])
+		) {
+		?>
+		<script type="text/javascript" language="javascript">
+			function checkUpdate() {
+				$.get( "/games/getTick", processTick );
+				setTimeout(checkUpdate, 3000);
+			}
+			function processTick(data) {
+				if (data > tick) {
+					$.get( "/scoresheet/index/ajax:1", updateSheet );
+					tick = data;
+				}
+			}
+			function updateSheet(data) {
+				$("#content").html(data);
+			}
+			var tick = 0;
+			$(document).ready(checkUpdate());
+		</script>
+		<?php
+		}
 	?>
 </head>
 <body>
@@ -88,6 +113,17 @@
 						array(
 							'controller' => 'games',
 							'action' => 'load',
+						)
+					);
+					?>
+				</li>
+				<li>
+					<?php
+					echo $this->Html->link(
+						'Increase Tick',
+						array(
+							'controller' => 'games',
+							'action' => 'increaseTick',
 						)
 					);
 					?>

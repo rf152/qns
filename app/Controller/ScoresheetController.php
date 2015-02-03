@@ -41,7 +41,9 @@ class ScoresheetController extends AppController {
 		
 		$this->Game->recursive = 2;
 		$game = $this->Game->findById($this->gid);
-		
+		if (isset($this->passedArgs['ajax'])) {
+			$this->layout = 'ajax';
+		}
 		$this->set('game', $game);
 	}
 	
