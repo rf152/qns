@@ -43,7 +43,7 @@ class Team extends AppModel {
 	);
 	
 	/// Default order
-	public $order = array('id');
+	public $order = array('Team.id');
 	
 	/**
 	 * Re-calculate the totals for the current game

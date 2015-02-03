@@ -72,7 +72,10 @@ class AppController extends Controller {
 			if (
 				!(
 					$this->request->controller == 'games' &&
-					$this->request->action == 'load'
+					(
+						$this->request->action == 'load' ||
+						$this->request->action == 'create'
+					)
 				) &&
 				!(
 					$this->request->controller == 'users' &&
